@@ -295,6 +295,66 @@ const INITIAL_QUESTIONS = [
     tags: ['고객응대', '배송지연'],
     memorized: false,
   },
+  {
+    id: 'sample-p5-4',
+    partId: 'p5',
+    order: 3,
+    prompt:
+      '보이스메일 내용: "안녕하세요, IT팀의 Kevin Marsh입니다. 내일 오전 10시 임원 발표에 사용할 프로젝터가 방금 고장났습니다. 회의실 3개를 확인했는데 모두 같은 모델이라 대체품이 없는 상황입니다. 발표 자료가 꼭 스크린에 표시돼야 해서 매우 급합니다. 내선번호 5-0-7로 연락 주시면 감사하겠습니다."',
+    content: '',
+    sampleAnswer:
+      "Hi Kevin, this is [name] returning your call. I completely understand — a projector failure right before an executive presentation is a serious issue, and I want to help resolve this as quickly as possible. Here are two options. First, we could connect a laptop directly to the conference room TV using an HDMI cable. Most modern TVs in our meeting rooms support this, and it should work as a solid backup display. Alternatively, if you need a larger screen, I can contact our facilities team right now to see if they can source a rental projector on short notice — some vendors offer same-day delivery. I'm going to start making calls immediately. Please check your email in the next twenty minutes for an update. You can also reach me directly at extension 3-1-2.",
+    templates: [
+      '① 공감: I completely understand — [상황] is a serious issue.',
+      '② 해결책 예고: Here are two options.',
+      '③ 1안: First, we could [구체적 대안].',
+      '④ 2안: Alternatively, I can contact [담당자/팀] to [조치].',
+      '⑤ 즉시 행동: I\'m going to [행동] immediately.',
+      '⑥ 후속 연락: Please check your [email/phone] in the next [시간] for an update.',
+    ],
+    tags: ['장비고장', '발표', '긴급'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p5-5',
+    partId: 'p5',
+    order: 4,
+    prompt:
+      '보이스메일 내용: "안녕하세요, 저는 신입사원 Amy Cho입니다. 오늘부터 온보딩인데 HR에서 제 컴퓨터 계정과 사원증이 아직 준비가 안 됐다고 합니다. 배정된 팀장님은 출장 중이시고, 어디서 무엇을 해야 할지 몰라서 연락드렸습니다. 555-2241로 연락 주시면 감사하겠습니다."',
+    content: '',
+    sampleAnswer:
+      "Hi Amy, welcome to the company! This is [name] from the HR department. I'm so sorry that your first day hasn't started as smoothly as it should have — I completely take responsibility for this oversight. Please don't worry; I'm going to sort everything out for you right now. First, please come to the HR office on the second floor, Room 201. I'll have a temporary access badge ready for you within the next fifteen minutes so you can move around the building freely. Regarding your computer account, I've already submitted an urgent request to our IT team and they've confirmed it will be activated by noon today. In the meantime, I'll set you up with some onboarding reading materials and introduce you to a team member who can show you around. Again, I apologize for the inconvenience, and I'll make sure the rest of your onboarding goes smoothly. See you shortly!",
+    templates: [
+      '① 환영+사과: Welcome! I\'m sorry that [상황] — I take responsibility for this.',
+      '② 안심: Please don\'t worry; I\'m going to sort everything out right now.',
+      '③ 즉각 조치 1: First, please [행동]. I\'ll have [결과] ready within [시간].',
+      '④ 즉각 조치 2: Regarding [문제], I\'ve already [조치] and they confirmed [결과].',
+      '⑤ 임시 대안: In the meantime, I\'ll [임시 해결책].',
+      '⑥ 재사과+마무리: Again, I apologize, and I\'ll make sure [약속].',
+    ],
+    tags: ['온보딩', 'HR', '신입사원'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p5-6',
+    partId: 'p5',
+    order: 5,
+    prompt:
+      '보이스메일 내용: "안녕하세요, 마케팅팀 팀장 Sandra Lee입니다. 어제 외부 업체에 보낸 디자인 시안 파일에 회사 기밀 내용이 포함된 슬라이드가 실수로 첨부됐다는 걸 방금 발견했습니다. 담당자인 귀하가 직접 처리해줄 수 있을까요? 내선 2-9-8로 바로 연락 주세요."',
+    content: '',
+    sampleAnswer:
+      "Hi Sandra, this is [name]. Thank you for catching this immediately — I understand this is a sensitive situation and needs to be handled urgently. I'm taking action right now. First, I've already sent an email to our contact at the vendor asking them to delete the file immediately and confirm in writing that no copies were made or shared. I've also flagged this to our legal and compliance team as a precaution, as they may need to assess the potential exposure. Second, I'm reviewing how that slide was attached in the first place so we can prevent this from happening again — I'll have a brief incident report ready for you by end of day. Please rest assured that I'm treating this as the top priority. I'll call you back within the next thirty minutes with a full update.",
+    templates: [
+      '① 즉각 인식: I understand this is sensitive and needs to be handled urgently.',
+      '② 이미 취한 조치: I\'ve already [조치1] asking them to [요청].',
+      '③ 에스컬레이션: I\'ve also flagged this to [팀/부서] as a precaution.',
+      '④ 재발 방지: I\'m reviewing how [문제] happened to prevent recurrence.',
+      '⑤ 보고 약속: I\'ll have a [report/update] ready for you by [시간].',
+      '⑥ 우선순위 확인: I\'m treating this as the top priority.',
+    ],
+    tags: ['기밀유출', '위기관리', '비즈니스'],
+    memorized: false,
+  },
 
   // ── Part 6: Express an Opinion ──
   {
@@ -353,6 +413,64 @@ const INITIAL_QUESTIONS = [
       'While some argue that..., I think that... actually... rather than...',
     ],
     tags: ['교육', '언어학습', '의견'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p6-4',
+    partId: 'p6',
+    order: 3,
+    prompt:
+      '직장에서 팀워크와 개인 역량 중 어느 것이 성공에 더 중요하다고 생각하나요? 구체적인 이유와 예시를 들어 설명하세요.',
+    content: '',
+    sampleAnswer:
+      "While both teamwork and individual skill are important, I believe teamwork is ultimately more critical to success in the modern workplace. No matter how talented an individual may be, complex projects today require collaboration across multiple areas of expertise that no single person can master alone. For example, developing a successful product requires engineers, designers, marketers, and project managers working in sync. If these people cannot communicate and cooperate effectively, even the most skilled individuals will fail to deliver results. Of course, individual competence is the foundation — you need capable people for a team to function. But I would argue that a team of moderately skilled people who collaborate well will consistently outperform a group of brilliant individuals who cannot work together. For this reason, companies should invest as much in building team culture and communication skills as they do in hiring individual talent.",
+    templates: [
+      '① 입장: While both [A] and [B] are important, I believe [A] is ultimately more critical because...',
+      '② 이유: No matter how [adjective] an individual may be, [이유].',
+      '③ 예시: For example, [구체적 상황] requires [여러 요소] working in sync.',
+      '④ 인정+반박: Of course, [반대 입장] — but I would argue that [내 주장].',
+      '⑤ 결론: For this reason, [주체] should [행동 제안].',
+    ],
+    tags: ['직장', '팀워크', '의견'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p6-5',
+    partId: 'p6',
+    order: 4,
+    prompt:
+      '온라인 교육이 전통적인 오프라인 교육을 완전히 대체할 수 있다고 생각하나요? 구체적인 이유와 예시를 들어 의견을 밝히세요.',
+    content: '',
+    sampleAnswer:
+      "I do not think online education can fully replace traditional in-person learning, although it is certainly a powerful complement to it. While online platforms offer undeniable advantages — such as flexibility, accessibility, and lower cost — they fall short in several critical areas. First, in-person education provides irreplaceable social development. Students learn not just from textbooks but from interacting with peers, navigating group dynamics, and developing communication skills in real-time situations. These are skills that a screen simply cannot replicate. Second, certain fields, such as medicine, laboratory science, and the performing arts, inherently require hands-on, physical practice that cannot be effectively conducted online. That said, I believe a blended approach — combining the convenience of online learning with the depth of face-to-face interaction — represents the most effective educational model going forward. Rather than viewing the two as competitors, we should see them as complementary tools.",
+    templates: [
+      '① 입장(부분 동의): I do not think [A] can fully replace [B], although it is certainly [긍정 인정].',
+      '② 첫 번째 한계: First, [온라인/A]의 한계. [구체 이유].',
+      '③ 두 번째 한계: Second, certain fields such as [예시] inherently require [오프라인/B].',
+      '④ 절충안 제시: That said, I believe a blended approach — [설명] — represents the most effective model.',
+      '⑤ 프레임 전환: Rather than viewing the two as competitors, we should see them as [관계].',
+    ],
+    tags: ['교육', '온라인학습', '의견'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p6-6',
+    partId: 'p6',
+    order: 5,
+    prompt:
+      '기업들이 환경 보호에 개인보다 더 큰 책임이 있다고 생각하나요? 아니면 환경 문제 해결은 개인의 행동 변화에서 시작돼야 한다고 생각하나요? 이유를 들어 설명하세요.',
+    content: '',
+    sampleAnswer:
+      "I strongly believe that corporations bear the greater responsibility for environmental protection, compared to individuals. While individual habits — such as recycling or reducing energy use — are meaningful, their cumulative impact is relatively small compared to the pollution and carbon emissions generated by large industries. According to various environmental studies, a small number of major corporations account for the majority of global greenhouse gas emissions. If these companies adopted cleaner production methods, renewable energy sources, and more sustainable supply chains, the environmental benefit would be far greater than any lifestyle change individuals could realistically make. Furthermore, individuals are often constrained by the choices corporations make available to them. If a company only offers products with excessive packaging or no eco-friendly alternatives, consumers have limited power to act sustainably regardless of their intentions. That said, I do believe individual awareness is important in creating social pressure on corporations to change. Ultimately, meaningful environmental progress requires systemic change at the corporate and governmental level, not just personal virtue.",
+    templates: [
+      '① 강한 입장: I strongly believe that [주체] bears the greater responsibility compared to [대조].',
+      '② 상대 인정+전환: While [반대 측 행동] are meaningful, their impact is relatively small compared to [내 주장].',
+      '③ 통계/데이터 인용: According to [출처], [사실].',
+      '④ 구조적 제약 논거: Furthermore, [개인/약자] are often constrained by [강자]의 choices.',
+      '⑤ 균형 인정: That said, I do believe [상대 측]\'s role is important in [제한된 역할].',
+      '⑥ 강력 결론: Ultimately, meaningful [목표] requires [시스템 변화], not just [개인 행동].',
+    ],
+    tags: ['환경', '기업책임', '의견'],
     memorized: false,
   },
 ]
