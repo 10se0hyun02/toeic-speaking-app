@@ -1,246 +1,154 @@
 import { useState } from 'react'
-import {
-  DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core'
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-  arrayMove,
-} from '@dnd-kit/sortable'
-import CategoryPanel from '../components/CategoryPanel'
-import CardItem from '../components/CardItem'
-
-function FullAnswerView({ cards }) {
-  const [copied, setCopied] = useState(false)
-  const [showKorean, setShowKorean] = useState(false)
-
-  const items = cards
-    .map((card) => ({ english: card.expressions[0]?.text, korean: card.korean }))
-    .filter((item) => item.english)
-
-  const fullText = items.map((item) => item.english).join(' ')
-
-  function handleCopy() {
-    navigator.clipboard.writeText(fullText).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }
-
-  if (items.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-40 text-gray-400">
-        <p className="text-sm">영어 표현이 아직 없어요.</p>
-        <p className="text-xs mt-1">카드 보기에서 영어 표현을 추가해주세요.</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-xs text-gray-400">{items.length}문장</span>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setShowKorean((v) => !v)}
-            className="text-xs text-gray-400 hover:text-gray-600 border border-gray-200 rounded-lg px-2.5 py-1 transition-colors"
-          >
-            {showKorean ? '한국어 숨기기' : '한국어 보기'}
-          </button>
-          <button
-            onClick={handleCopy}
-            className={`text-xs px-3 py-1 rounded-lg transition-colors ${
-              copied
-                ? 'bg-green-100 text-green-600'
-                : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'
-            }`}
-          >
-            {copied ? '복사됨 ✓' : '복사'}
-          </button>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        {items.map((item, i) => (
-          <div key={i} className="flex gap-3">
-            <span className="shrink-0 w-5 text-right text-xs font-mono text-gray-300 mt-0.5">
-              {i + 1}.
-            </span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-gray-800 leading-relaxed">{item.english}</p>
-              {showKorean && (
-                <p className="text-xs text-gray-400 mt-1">{item.korean}</p>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+import { TOEIC_PARTS, PART_MAP } from '../constants/toeicParts'
+import PartPanel from '../components/PartPanel'
+import QuestionItem from '../components/QuestionItem'
+import EnglishText from '../components/EnglishText'
 
 export default function StudyTab({ data }) {
-  const {
-    sortedCategories,
-    cardsForCategory,
-    addCategory,
-    updateCategory,
-    deleteCategory,
-    addCard,
-    updateCard,
-    deleteCard,
-    reorderCards,
-    addExpression,
-    updateExpression,
-    deleteExpression,
-  } = data
-
-  const [selectedCatId, setSelectedCatId] = useState(null)
-  const [newKorean, setNewKorean] = useState('')
-  const [addingCard, setAddingCard] = useState(false)
+  const [selectedPartId, setSelectedPartId] = useState('p1')
+  const [newPrompt, setNewPrompt] = useState('')
+  const [adding, setAdding] = useState(false)
   const [viewMode, setViewMode] = useState('cards')
 
-  const categories = sortedCategories()
-  const selectedCat = categories.find((c) => c.id === selectedCatId)
-  const cards = selectedCatId ? cardsForCategory(selectedCatId) : []
+  const partConfig = PART_MAP[selectedPartId]
+  const questions = data.questionsForPart(selectedPartId)
+  const progress = data.progressForPart(selectedPartId)
 
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
-
-  function handleDragEnd(event) {
-    const { active, over } = event
-    if (!over || active.id === over.id) return
-    const oldIndex = cards.findIndex((c) => c.id === active.id)
-    const newIndex = cards.findIndex((c) => c.id === over.id)
-    const reordered = arrayMove(cards, oldIndex, newIndex)
-    reorderCards(selectedCatId, reordered.map((c) => c.id))
-  }
-
-  function handleAddCard() {
-    if (!newKorean.trim() || !selectedCatId) return
-    addCard(selectedCatId, newKorean.trim())
-    setNewKorean('')
-    setAddingCard(false)
-  }
-
-  function handleSelectCategory(id) {
-    setSelectedCatId(id)
-    setViewMode('cards')
-    setAddingCard(false)
+  function handleAdd() {
+    if (!newPrompt.trim()) return
+    data.addQuestion(selectedPartId, newPrompt.trim())
+    setNewPrompt('')
+    setAdding(false)
   }
 
   return (
     <div className="flex flex-col md:flex-row gap-6">
-      <CategoryPanel
-        categories={categories}
-        selectedId={selectedCatId}
-        onSelect={handleSelectCategory}
-        onAdd={addCategory}
-        onUpdate={updateCategory}
-        onDelete={(id) => {
-          deleteCategory(id)
-          if (selectedCatId === id) setSelectedCatId(null)
-        }}
-        cardsForCategory={cardsForCategory}
+      <PartPanel
+        parts={TOEIC_PARTS}
+        selectedId={selectedPartId}
+        onSelect={setSelectedPartId}
+        progressForPart={data.progressForPart}
       />
 
       <div className="flex-1 min-w-0">
-        {!selectedCat ? (
-          <div className="flex flex-col items-center justify-center h-64 text-gray-400">
-            <p className="text-4xl mb-3">📚</p>
-            <p className="text-sm">왼쪽에서 카테고리를 선택하세요</p>
+        {/* Part header */}
+        <div className="flex items-start justify-between mb-1">
+          <div>
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Part {partConfig.number}</span>
+              <span className="text-xs text-gray-400">·</span>
+              <span className="text-xs text-gray-400">{partConfig.titleEn}</span>
+            </div>
+            <h2 className="text-xl font-bold text-gray-900">{partConfig.title}</h2>
+            <p className="text-sm text-gray-500 mt-0.5">{partConfig.description}</p>
           </div>
-        ) : (
+          <div className="flex items-center gap-2 shrink-0 mt-1">
+            <button
+              onClick={() => setViewMode('cards')}
+              className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${viewMode === 'cards' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}
+            >
+              카드
+            </button>
+            <button
+              onClick={() => setViewMode('doc')}
+              className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${viewMode === 'doc' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}
+            >
+              답안 보기
+            </button>
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        {progress.total > 0 && (
+          <div className="flex items-center gap-3 mb-4 mt-3">
+            <div className="flex-1 h-1.5 bg-gray-100 rounded-full">
+              <div
+                className="h-1.5 bg-gray-700 rounded-full transition-all"
+                style={{ width: `${progress.pct}%` }}
+              />
+            </div>
+            <span className="text-xs text-gray-400">{progress.done}/{progress.total} 암기</span>
+          </div>
+        )}
+
+        {viewMode === 'cards' ? (
           <>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-gray-800">{selectedCat.name}</h2>
-              <div className="flex items-center gap-2">
-                {/* 뷰 토글 */}
-                <div className="flex rounded-xl overflow-hidden border border-gray-200 text-sm">
+            {questions.length === 0 && !adding && (
+              <div className="text-center py-16 text-gray-400">
+                <p className="text-sm">아직 문제가 없습니다.</p>
+                <p className="text-xs mt-1">아래 버튼으로 문제를 추가해보세요.</p>
+              </div>
+            )}
+
+            {questions.map((q, i) => (
+              <QuestionItem
+                key={q.id}
+                question={q}
+                partConfig={partConfig}
+                index={i}
+                onUpdate={data.updateQuestion}
+                onDelete={data.deleteQuestion}
+              />
+            ))}
+
+            {adding ? (
+              <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-4 mb-3">
+                <textarea
+                  autoFocus
+                  className="w-full text-sm text-gray-800 border border-gray-200 rounded-lg p-2 resize-none focus:outline-none focus:ring-2 focus:ring-gray-400 mb-3"
+                  rows={3}
+                  placeholder="문제 설명을 입력하세요…"
+                  value={newPrompt}
+                  onChange={(e) => setNewPrompt(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && e.metaKey) handleAdd()
+                    if (e.key === 'Escape') { setAdding(false); setNewPrompt('') }
+                  }}
+                />
+                <div className="flex gap-2">
                   <button
-                    onClick={() => setViewMode('cards')}
-                    className={`px-3 py-1.5 transition-colors ${
-                      viewMode === 'cards'
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-white text-gray-500 hover:bg-gray-50'
-                    }`}
+                    onClick={handleAdd}
+                    className="bg-gray-800 text-white text-sm px-4 py-1.5 rounded-lg hover:bg-gray-900 transition-colors"
                   >
-                    카드
+                    추가
                   </button>
                   <button
-                    onClick={() => setViewMode('full')}
-                    className={`px-3 py-1.5 transition-colors ${
-                      viewMode === 'full'
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-white text-gray-500 hover:bg-gray-50'
-                    }`}
+                    onClick={() => { setAdding(false); setNewPrompt('') }}
+                    className="text-sm text-gray-500 px-4 py-1.5 rounded-lg hover:bg-gray-100 transition-colors"
                   >
-                    전체 답변
+                    취소
                   </button>
                 </div>
-                {viewMode === 'cards' && (
-                  <button
-                    onClick={() => setAddingCard(true)}
-                    className="text-sm bg-indigo-600 text-white px-3 py-1.5 rounded-xl hover:bg-indigo-700 transition-colors"
-                  >
-                    + 카드 추가
-                  </button>
-                )}
               </div>
-            </div>
-
-            {viewMode === 'full' ? (
-              <FullAnswerView cards={cards} />
             ) : (
-              <>
-                {addingCard && (
-                  <div className="bg-white border border-indigo-200 rounded-2xl p-3 mb-3 shadow-sm">
-                    <input
-                      autoFocus
-                      value={newKorean}
-                      onChange={(e) => setNewKorean(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && handleAddCard()}
-                      placeholder="한국어 흐름 입력 (예: 저는 서울에 살고 있어요.)"
-                      className="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 outline-none focus:border-indigo-400 mb-2"
-                    />
-                    <div className="flex gap-2">
-                      <button onClick={handleAddCard} className="text-sm bg-indigo-600 text-white px-4 py-1.5 rounded-xl">추가</button>
-                      <button onClick={() => { setAddingCard(false); setNewKorean('') }} className="text-sm bg-gray-100 text-gray-600 px-4 py-1.5 rounded-xl">취소</button>
-                    </div>
-                  </div>
-                )}
-
-                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                  <SortableContext items={cards.map((c) => c.id)} strategy={verticalListSortingStrategy}>
-                    <div className="space-y-2">
-                      {cards.map((card, index) => (
-                        <CardItem
-                          key={card.id}
-                          card={card}
-                          index={index}
-                          onUpdate={updateCard}
-                          onDelete={deleteCard}
-                          onAddExpr={addExpression}
-                          onUpdateExpr={updateExpression}
-                          onDeleteExpr={deleteExpression}
-                        />
-                      ))}
-                    </div>
-                  </SortableContext>
-                </DndContext>
-
-                {cards.length === 0 && !addingCard && (
-                  <div className="flex flex-col items-center justify-center h-40 text-gray-400">
-                    <p className="text-sm">아직 카드가 없어요.</p>
-                    <p className="text-xs mt-1">위 "+ 카드 추가" 버튼을 눌러 시작하세요.</p>
-                  </div>
-                )}
-              </>
+              <button
+                onClick={() => setAdding(true)}
+                className="w-full py-2.5 text-sm text-gray-400 border border-dashed border-gray-300 rounded-xl hover:border-gray-400 hover:text-gray-600 transition-colors"
+              >
+                + 문제 추가
+              </button>
             )}
           </>
+        ) : (
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            {questions.length === 0 ? (
+              <p className="text-sm text-gray-400 text-center py-8">이 파트에 문제가 없습니다.</p>
+            ) : (
+              <div className="space-y-6">
+                {questions.map((q, i) => (
+                  <div key={q.id} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Q{i + 1}</p>
+                    <p className="text-sm text-gray-600 mb-3 whitespace-pre-wrap">{q.prompt}</p>
+                    {q.sampleAnswer && (
+                      <div className="text-sm text-gray-800 leading-relaxed whitespace-pre-wrap">
+                        <EnglishText text={q.sampleAnswer} />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
