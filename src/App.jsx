@@ -3,12 +3,14 @@ import { useToeicData } from './hooks/useToeicData'
 import StudyTab from './pages/StudyTab'
 import PracticeTab from './pages/PracticeTab'
 import MockTestTab from './pages/MockTestTab'
+import ExpressionsTab from './pages/ExpressionsTab'
 import DataManager from './components/DataManager'
 
 const TABS = [
   { id: 'study', label: '학습 자료' },
   { id: 'practice', label: '파트 연습' },
   { id: 'mocktest', label: '모의시험' },
+  { id: 'expressions', label: '표현 모음' },
 ]
 
 export default function App() {
@@ -45,6 +47,7 @@ export default function App() {
         {activeTab === 'study' && <StudyTab data={data} />}
         {activeTab === 'practice' && <PracticeTab data={data} />}
         {activeTab === 'mocktest' && <MockTestTab data={data} />}
+        {activeTab === 'expressions' && <ExpressionsTab />}
       </main>
     </div>
   )
