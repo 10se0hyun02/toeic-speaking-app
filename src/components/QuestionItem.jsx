@@ -150,8 +150,8 @@ export default function QuestionItem({ question, partConfig, index, onUpdate, on
             </div>
           )}
 
-          {/* Sample answer */}
-          <div>
+          {/* Sample answer — hidden for Part 1 (read aloud, no original answer needed) */}
+          {partConfig.id !== 'p1' && <div>
             <p className="text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wide">모범 답안</p>
             {editingField === 'sampleAnswer' ? (
               <textarea
@@ -173,10 +173,10 @@ export default function QuestionItem({ question, partConfig, index, onUpdate, on
                   : <span className="text-gray-300 italic">모범 답안을 입력하세요…</span>}
               </div>
             )}
-          </div>
+          </div>}
 
-          {/* Templates */}
-          <div>
+          {/* Templates — hidden for Part 1 */}
+          {partConfig.id !== 'p1' && <div>
             <p className="text-xs font-semibold text-gray-400 mb-1.5 uppercase tracking-wide">템플릿 문장</p>
             {editingField === 'templates' ? (
               <div>
@@ -211,7 +211,7 @@ export default function QuestionItem({ question, partConfig, index, onUpdate, on
                 )}
               </div>
             )}
-          </div>
+          </div>}
 
           {/* Tags */}
           <div>
