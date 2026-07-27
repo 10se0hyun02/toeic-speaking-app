@@ -120,6 +120,43 @@ const INITIAL_QUESTIONS = [
     tags: ['카페', '실내'],
     memorized: false,
   },
+  {
+    id: 'sample-p2-4',
+    partId: 'p2',
+    order: 3,
+    prompt: 'Q3 - 도심 공원',
+    content:
+      '[사진 힌트] 도심 공원 / 벤치에 앉아 책 읽는 사람, 조깅하는 사람 등 여러 활동 / 나무와 잔디밭이 잘 가꿔져 있음 / 포장된 산책로 / 배경에 고층 건물과 맑은 하늘',
+    sampleAnswer:
+      "This picture shows a public park located in what appears to be a city, based on the tall buildings visible in the background. The park looks well-maintained, with neatly trimmed grass, large trees providing shade, and a paved walking path running through the area. Several people are making use of the park in different ways — one person appears to be sitting on a bench reading a book, while others seem to be jogging or strolling along the path. The overall atmosphere feels peaceful and relaxing, offering a welcome contrast to the busy urban environment surrounding it.",
+    templates: [
+      'This picture shows a [place] located in..., based on...',
+      'The [place] looks well-maintained, with...',
+      'Several people are making use of the [place] in different ways —',
+      'The overall atmosphere feels..., offering a contrast to...',
+    ],
+    tags: ['공원', '야외', '도심'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p2-5',
+    partId: 'p2',
+    order: 4,
+    prompt: 'Q4 - 비즈니스 회의',
+    content:
+      '[사진 힌트] 회의실 / 긴 테이블 주위에 정장 차림의 여러 사람들 / 한 사람이 서서 스크린에 차트·그래프를 발표 중 / 참가자들은 노트패드나 노트북 앞에 앉아 발표를 듣거나 메모 중 / 화이트보드와 창문이 있는 밝은 공간',
+    sampleAnswer:
+      "This photo appears to have been taken inside a corporate conference room. Several people dressed in business attire are seated around a large rectangular table, all facing toward one end of the room. One individual is standing and appears to be giving a presentation, pointing to a screen that displays what looks like charts or graphs. The other participants seem to be listening attentively, with some taking notes on notepads or laptops placed in front of them. The room is bright and well-lit with large windows, giving it a professional and formal atmosphere.",
+    templates: [
+      'This photo appears to have been taken inside a...',
+      'Several people dressed in... are seated around...',
+      'One individual is standing and appears to be...',
+      'The other participants seem to be..., with some...',
+      'The room is..., giving it a... atmosphere.',
+    ],
+    tags: ['회의', '비즈니스', '실내'],
+    memorized: false,
+  },
 
   // ── Part 3: Respond to Questions ──
   {
@@ -173,6 +210,60 @@ const INITIAL_QUESTIONS = [
       'In the long run,...',
     ],
     tags: ['여가', '취미', '워라밸'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p3-4',
+    partId: 'p3',
+    order: 3,
+    prompt:
+      '주제: 쇼핑\nQ5. 평소 쇼핑은 주로 온라인으로 하나요, 아니면 매장에서 직접 하나요?\nQ6. 쇼핑할 때 가장 중요하게 생각하는 것은 무엇인가요?\nQ7. 온라인 쇼핑의 급증이 지역 소매점에 미치는 영향에 대해 어떻게 생각하나요?',
+    content: '',
+    sampleAnswer:
+      "Q5. Honestly, I do most of my shopping online these days. It's just so much more convenient — I can compare prices and read reviews without leaving home.\nQ6. I'd say price is the most important factor for me, followed closely by product quality and reliability. I also pay a lot of attention to return policies, especially when buying online, since you can't try things before you buy.\nQ7. I think the rise of online shopping has had a significant negative impact on local stores, especially small, independent retailers. Many have struggled to compete on price and convenience. That said, I believe physical stores still have a role to play — stores that focus on providing unique experiences or personalized service can still thrive.",
+    templates: [
+      'I do most of my... online/in-store because...',
+      "I'd say [factor] is the most important, followed closely by...",
+      'I think the rise of... has had a [positive/negative] impact on... because...',
+      'That said, I believe... still has a role to play. Stores that... can still...',
+    ],
+    tags: ['쇼핑', '소비', '온라인'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p3-5',
+    partId: 'p3',
+    order: 4,
+    prompt:
+      '주제: 여행\nQ5. 여행을 계획할 때 가장 먼저 무엇을 결정하나요?\nQ6. 패키지 여행과 자유 여행 중 어느 쪽을 더 선호하나요?\nQ7. 관광산업의 성장이 여행지의 문화와 환경에 어떤 영향을 미친다고 생각하나요?',
+    content: '',
+    sampleAnswer:
+      "Q5. The first thing I decide is the destination, because everything else — the budget, the activities, how long to go — follows from that choice.\nQ6. I personally prefer independent travel over package tours. I like the freedom to set my own schedule and explore places at my own pace. Package tours can feel rushed, and you don't always get to see what you're actually interested in.\nQ7. I think mass tourism has both benefits and drawbacks for local communities. On the positive side, it brings in significant revenue and creates jobs. However, overtourism can damage historical sites, disrupt local ways of life, and harm natural environments. I think the key is sustainable tourism — encouraging travelers to be more mindful and governments to regulate the number of visitors to sensitive areas.",
+    templates: [
+      'The first thing I decide is..., because everything else follows from that.',
+      'I personally prefer... over... because...',
+      'I think... has both benefits and drawbacks. On the positive side,... However,...',
+      'The key is [solution] — [specific action].',
+    ],
+    tags: ['여행', '관광', '문화'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p3-6',
+    partId: 'p3',
+    order: 5,
+    prompt:
+      '주제: 업무 환경\nQ5. 어떤 업무 환경에서 가장 잘 집중할 수 있나요?\nQ6. 직장을 선택할 때 급여와 업무 만족도 중 무엇을 더 중요하게 생각하나요?\nQ7. 재택근무가 미래의 표준 근무 형태가 될 것이라고 생각하나요? 이유를 설명하세요.',
+    content: '',
+    sampleAnswer:
+      "Q5. I work best in a quiet, organized environment with minimal interruptions. I find open-plan offices can be quite distracting, so I tend to be more productive when I can work in a private space or from home.\nQ6. I think job satisfaction is more important than salary in the long run. If you're doing meaningful work and enjoy the people you work with, you're more likely to stay motivated and grow professionally. Of course, the salary needs to be enough to meet your basic needs — but beyond that, I prioritize purpose over pay.\nQ7. I think remote work will become increasingly common, but I don't think it will completely replace office work. Some tasks and team dynamics genuinely benefit from in-person interaction. A hybrid model — where employees split time between home and the office — is probably what most companies will settle on going forward.",
+    templates: [
+      'I work best in... I find... can be quite distracting.',
+      'I think [A] is more important than [B] in the long run because...',
+      'Of course, [compromise] — but beyond that, I prioritize...',
+      "I think [trend] will become more common, but won't completely replace... A hybrid model is probably...",
+    ],
+    tags: ['직장', '업무환경', '재택근무'],
     memorized: false,
   },
 
@@ -471,6 +562,44 @@ const INITIAL_QUESTIONS = [
       '⑥ 강력 결론: Ultimately, meaningful [목표] requires [시스템 변화], not just [개인 행동].',
     ],
     tags: ['환경', '기업책임', '의견'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p6-7',
+    partId: 'p6',
+    order: 6,
+    prompt:
+      '소셜 미디어가 현대인의 인간관계에 전반적으로 긍정적인 영향을 준다고 생각하나요, 아니면 부정적인 영향이 더 크다고 생각하나요? 이유와 예시를 들어 설명하세요.',
+    content: '',
+    sampleAnswer:
+      "I believe social media has, on balance, had a more negative impact on human relationships, despite its obvious benefits. While platforms like Instagram allow people to stay connected across distances, they often promote a curated, superficial version of real life that fosters feelings of inadequacy and social comparison. Studies have shown that heavy social media use is associated with higher rates of anxiety, loneliness, and depression, particularly among young people. Furthermore, the volume of digital interaction tends to replace the deeper, face-to-face connections that are essential for emotional well-being. Admittedly, social media has been invaluable for people who are geographically isolated — it has genuinely helped many people find communities they wouldn't otherwise have access to. However, for the majority of users, I believe the passive, scroll-based nature of social media does more harm than good to the quality of their relationships. Ultimately, the benefits of real-world connection far outweigh what social media can offer.",
+    templates: [
+      '① 입장: I believe [주제] has, on balance, had a more [neg/pos] impact, despite its obvious [반대 장점].',
+      '② 이유: While [A] allow people to..., they often promote [부정적 패턴].',
+      '③ 근거: Studies have shown that [주제] is associated with [결과], particularly among [대상].',
+      '④ 반론 인정: Admittedly, [주제] has been invaluable for [특정 집단] who...',
+      '⑤ 결론: However, for the majority,... Ultimately, [강한 마무리].',
+    ],
+    tags: ['소셜미디어', 'SNS', '인간관계', '의견'],
+    memorized: false,
+  },
+  {
+    id: 'sample-p6-8',
+    partId: 'p6',
+    order: 7,
+    prompt:
+      '건강한 생활습관을 유지하는 것은 전적으로 개인의 책임이라고 생각하나요, 아니면 정부와 사회가 더 적극적인 역할을 해야 한다고 생각하나요? 구체적인 이유와 예시를 들어 설명하세요.',
+    content: '',
+    sampleAnswer:
+      "I believe maintaining a healthy lifestyle is a shared responsibility, though I lean toward the view that systemic factors — which only governments can address — play the more decisive role. While personal choices such as diet and exercise clearly matter, those choices are heavily shaped by the environment people live in. For example, people in lower-income neighborhoods often have limited access to fresh food, safe places to exercise, or affordable healthcare. No amount of personal willpower can fully overcome these structural barriers. Governments have a responsibility to create conditions that make healthy living possible for everyone — through policies like food labeling regulations, subsidies for fresh produce, and investment in public parks and sports facilities. Of course, individuals must still take responsibility for the choices available to them. But I would argue that blaming health problems entirely on personal behavior ignores the deep structural inequalities that shape those behaviors in the first place.",
+    templates: [
+      '① 입장(균형): I believe [주제] is a shared responsibility, though I lean toward [내 주장].',
+      '② 논거: While [개인 요소] clearly matter, those choices are heavily shaped by [환경/구조].',
+      '③ 예시: For example, people in [상황] often have limited access to [자원].',
+      '④ 핵심: [주체] have a responsibility to create conditions that make [목표] possible for everyone.',
+      '⑤ 반론+재반박: Of course, individuals must still... But I would argue that blaming [결과] on [개인] ignores [구조적 문제].',
+    ],
+    tags: ['건강', '정부책임', '사회', '의견'],
     memorized: false,
   },
 ]
