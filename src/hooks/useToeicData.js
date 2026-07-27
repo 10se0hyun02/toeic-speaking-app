@@ -267,7 +267,7 @@ const INITIAL_QUESTIONS = [
     templates: [
       'Thank you for letting me know as soon as possible.',
       "I'd like to explore our options.",
-      'First, I'd like to ask whether...',
+      "First, I'd like to ask whether...",
       'If not, we could consider...',
       'Another option would be to...',
       'Could you let me know...? Please call me back at...',
